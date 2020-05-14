@@ -1,7 +1,7 @@
 function [retval] = ConvertImageToCardImageList(image)
 
-  image_bw = convertbw(image);
-  retval = getcardsarray(image, image_bw);
+  image_bw = ConvertImageToBlackAndWhite(image);
+  retval = GetCardsArray(image, image_bw);
 
 end
 
