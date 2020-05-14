@@ -1,4 +1,4 @@
-function retval = convertbw (image)
+function retval = ConvertImageToBlackAndWhite (image)
   
   image_hsv = rgb2hsv(image);
 

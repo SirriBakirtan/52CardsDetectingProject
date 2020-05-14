@@ -1,4 +1,4 @@
-function retval = getcardsarray (image, image_bw)
+function retval = GetCardsArray (image, image_bw)
   
   image_stats = regionprops(image_bw, "boundingbox");
   threshhold = uint16(length(image_bw(:, 1))) / 10;
