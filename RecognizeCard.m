@@ -1,7 +1,7 @@
-function [outputArg1,outputArg2] = RecognizeCard(inputArg1,inputArg2)
-%RECOGNIZECARD Summary of this function goes here
-%   Detailed explanation goes here
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+function [cardType] = RecognizeCard(cardImage)
+  width = length(cardImage(1, :, 1));
+  height = length(cardImage(:, 1, 1));
+  cardTypeCropped = cardImage(1:height*0.30, 1:width*0.175, :);
+  cardType = cardTypeCropped;
 end
 
