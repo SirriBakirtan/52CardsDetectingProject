@@ -54,8 +54,12 @@ function [card_number, card_type] = RecognizeCard(card_image)
     end
   end
 
-  card_number = most_possible_number;
-  card_type = most_possible_type;
+  if (length(image_stats) == 3)
+    card_number = "ten";
+  else
+    card_number = most_possible_number(1: end - 4);
+  end
+  card_type = most_possible_type(1: end - 4);
     
 end
 
