@@ -10,4 +10,4 @@ function retval = ConvertImageToBlackAndWhite (image)
   image_gray = rgb2gray(hsv2rgb(image_hsv));
   retval = im2bw(image_gray, 0.5);
 
-endfunction
+end

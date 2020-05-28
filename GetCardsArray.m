@@ -10,9 +10,10 @@ function retval = GetCardsArray (image, image_bw)
       width = uint16(floor(image_stats(i).BoundingBox(4)));
       height = uint16(floor(image_stats(i).BoundingBox(3)));
       cards{end + 1} = image(x: x + width, y: y + height, :);
-    endif
-  endfor
+    end
+  end
   
   retval = cards;
   
-endfunction
+end
+    

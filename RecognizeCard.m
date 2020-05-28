@@ -62,4 +62,3 @@ function [card_number, card_type] = RecognizeCard(card_image)
   card_type = most_possible_type(1: end - 4);
     
 end
-

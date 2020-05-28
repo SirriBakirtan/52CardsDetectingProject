@@ -6,13 +6,19 @@ if(row < col)
     Image = imrotate(Image,90);
 end
 
-targetImageData = Image;
-imshow(targetImageData);
+binarizeImg = ConvertImageToBlackAndWhite(Image);
+corners = pgonCorners(binarizeImg,4);
+% imshow(binarizeImg);
+% hold on;
+% plot( corners(:,2),corners(:,1),'yo','MarkerFaceColor','r',...
+%                                 'MarkerSize',12,'LineWidth',2);
+% hold off;
 
-[X Y] = ginput(4);
+ X = corners(:,2);
+ Y = corners(:,1);
 
-x=[1;210;210;1];
-y=[1;1;297;297];
+x=[1;410;410;1];
+y=[1;1;397;397];
 
 A=zeros(8,8);
 A(1,:)=[X(1),Y(1),1,0,0,0,-1*X(1)*x(1),-1*Y(1)*x(1)];
@@ -35,13 +41,11 @@ U=reshape([u;1],3,3)';
 
 T = projective2d(U');
 
-P2=imwarp(targetImageData,T);
+P2=imwarp(Image,T);
 
 image_bw = ConvertImageToBlackAndWhite(P2);
 retval = GetCardsArray(P2, image_bw);
-retval{1}=imresize(retval{1},[451 650]);
-figure;
-imshow(retval{1});
+retval{1}=imresize(flip(retval{1}),[450 650]);
 output =retval{1};
 end
 

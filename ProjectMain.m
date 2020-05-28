@@ -1,8 +1,8 @@
-image = imread("images/4clubs.jpg");
+image = imread("images/Aclubs.jpg");
 
-t = ConvertImageToCardImageList(image);
-
-for i = 1:length(t)
-  rect = ConvertToRectangleCardImage(cell2mat(t(i)));
+cardList = ConvertImageToCardImageList(image);
+for i = 1:length(cardList)
+  rect = ConvertToRectangleCardImage(cell2mat(cardList(i)));
+  imshow(rect);
   [number, type] = RecognizeCard(rect);
 end
