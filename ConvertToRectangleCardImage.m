@@ -7,18 +7,22 @@ if(row < col)
 end
 
 binarizeImg = ConvertImageToBlackAndWhite(Image);
-corners = pgonCorners(binarizeImg,4);
+
+kernel = ones(3,3)/9;
+FilteredImage = conv2(binarizeImg,kernel,'same');
+
+corners = pgonCorners(FilteredImage,4);
 % imshow(binarizeImg);
 % hold on;
 % plot( corners(:,2),corners(:,1),'yo','MarkerFaceColor','r',...
 %                                 'MarkerSize',12,'LineWidth',2);
 % hold off;
 
- X = corners(:,2);
- Y = corners(:,1);
+X = corners(:,2);
+Y = corners(:,1);
 
 x=[1;410;410;1];
-y=[1;1;397;397];
+y=[1;1;497;497];
 
 A=zeros(8,8);
 A(1,:)=[X(1),Y(1),1,0,0,0,-1*X(1)*x(1),-1*Y(1)*x(1)];
@@ -41,11 +45,10 @@ U=reshape([u;1],3,3)';
 
 T = projective2d(U');
 
-P2=imwarp(Image,T);
-
+P2 = flip(imwarp(Image,T));
 image_bw = ConvertImageToBlackAndWhite(P2);
 retval = GetCardsArray(P2, image_bw);
-retval{1}=imresize(flip(retval{1}),[450 650]);
+retval{1}=imcrop(imresize(retval{1},[450 450]),[5 5 440 440]);
 output =retval{1};
 end
 

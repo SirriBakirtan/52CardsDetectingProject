@@ -1,13 +1,20 @@
 function [card_number, card_type] = RecognizeCard(card_image)
   
   [height, width, ignored] = size(card_image);
-  y = uint16(height * 0.04);
+  y = uint16(height * 0.03);
   height = uint16(height * 0.275);
   x = uint16(width * 0.03);
-  width = uint16(width * 0.130);
+  width = uint16(width * 0.145);
   card_type_cropped = card_image(y:height, x:width, :);
   image_bw = ConvertImageToBlackAndWhite(card_type_cropped);
+  
   image_bw = imcomplement(image_bw);
+  kernel = ones(3,3)/9;
+  image_bw = conv2(image_bw,kernel,'same');
+  image_bw =  imbinarize(image_bw);
+ 
+  se = strel('disk',2);
+  image_bw = imopen(image_bw,se); 
   image_stats = regionprops(image_bw, "boundingbox");
   for i = 1:2
     x = uint16(floor(image_stats(i).BoundingBox(2))) + 1;
