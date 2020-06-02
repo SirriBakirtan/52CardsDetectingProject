@@ -13,7 +13,7 @@ function [card_number, card_type] = RecognizeCard(card_image)
   image_bw = conv2(image_bw,kernel,'same');
   image_bw =  imbinarize(image_bw);
  
-  se = strel('disk',2);
+  se = strel('disk',1);
   image_bw = imopen(image_bw,se); 
   image_stats = regionprops(image_bw, "boundingbox");
   for i = 1:2
