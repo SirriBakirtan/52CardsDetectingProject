@@ -67,7 +67,7 @@ function [card_number, card_type] = RecognizeCard(card_image)
   end
 
   if (length(image_stats) == 3)
-    card_number = "ten";
+    card_number = "10";
   else
     card_number = most_possible_number(1: end - 4);
   end
