@@ -2,6 +2,9 @@ function [output] = ConvertToRectangleCardImage(Image)
 row = size(Image,1);
 col = size(Image,2);
 
+se = strel('disk',3);
+Image = imopen(Image,se); 
+
 if(row < col)
     Image = imrotate(Image,90);
 end

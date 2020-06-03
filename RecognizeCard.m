@@ -17,20 +17,20 @@ function [card_number, card_type] = RecognizeCard(card_image)
   image_bw = imopen(image_bw,se); 
   image_stats = regionprops(image_bw, "boundingbox");
   [height, width] = size(image_bw);
-  upBoundedBox = height;
-  lowBoundedBox = 0;
+  upBoundedBox = 0;
+  lowBoundedBox = height;
   for i = 1:length(image_stats)
     y = uint16(floor(image_stats(i).BoundingBox(2))) + 1;
     x = uint16(floor(image_stats(i).BoundingBox(1))) + 1;
     height = uint16(floor(image_stats(i).BoundingBox(4))) - 1;
     width = uint16(floor(image_stats(i).BoundingBox(3))) - 1;
-    if y > lowBoundedBox
+    if y < lowBoundedBox
       lowBoundedBox = y;
-      card_number = image_bw(x: x + width, y: y + height, :);
+      card_number = image_bw(y: y + (height-1), x: x + (width-1), :);
     end
-    if y < upBoundedBox
+    if y > upBoundedBox
       upBoundedBox = y;
-      card_type = image_bw(x: x + width, y: y + height, :);
+      card_type = image_bw(y: y + (height-1), x: x + (width-1), :);
     end
   end
   card_number = imresize(card_number, [50, 50]);
