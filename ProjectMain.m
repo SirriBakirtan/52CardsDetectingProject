@@ -7,7 +7,7 @@ for i = 1:length(defined_types)
     cardList = ConvertImageToCardImageList(image);
     for j = 1:length(cardList)
       rect = ConvertToRectangleCardImage(cell2mat(cardList(j)));
-      [number, type] = RecognizeCard(rect);  
+      [number, type] = RecognizeCard(rect);
       TotalCards(i,1) = append(number,type);
     end
     fileCardName = string(defined_types(i).name(1:size(defined_types(i).name,2)-4));
@@ -21,6 +21,22 @@ end
 Predicted = TotalCards(:,1);
 Actual = TotalCards(:,2);
 Chart = confusionchart(Actual,Predicted);
+ChartValues = Chart.NormalizedValues;
+
+for i =1:size(ChartValues,1)
+    recall(i)=ChartValues(i,i)/sum(ChartValues(i,:));
+end
+
+recall(isnan(recall))=[];
+Recall=sum(recall)/size(ChartValues,1);
+
+for i =1:size(ChartValues,1)
+    precision(i)=ChartValues(i,i)/sum(ChartValues(:,i));
+end
+
+precision(isnan(precision))=[];
+Precision=sum(precision)/size(ChartValues,1);
+F_score=2*Recall*Precision/(Precision+Recall);
 
 %% Enter image address to test.
 
